@@ -9,12 +9,25 @@ public class Main {
     }
 
     public static int countMore(int[] prices, int money) {
-        for (int i = 0; i < prices.length; i++) {
-            if (prices[i] > money) {
-                return prices.length - i; // сколько осталось товаров
-            }
+        if (prices[0] > money) {
+            return prices.length;
         }
-        return 0; // если не нашли ни одного товара дороже
+
+        if (prices[prices.length - 1] < money) {
+            return 0;
+        }
+
+        int left = 0;
+        int right = prices.length - 1;
+        while (left < right) {
+            int middle = (left + right) / 2;
+
+            if(prices[middle]>money && prices[middle]!=prices[middle-1]) return prices.length-middle;
+            else if(prices[middle]<=money) left = middle + 1;
+            else if(prices[middle]>=money) right = middle - 1;
+        }
+
+        return 0;
     }
 
 }
